@@ -1,7 +1,7 @@
 package demos
 
 import (
-	"github.com/orzkratos/astkratos/internal/utils"
+	"github.com/orzkratos/astkratos"
 	"github.com/yyle88/osexec"
 	"github.com/yyle88/osexistpath/osmustexist"
 	"github.com/yyle88/rese"
@@ -26,7 +26,7 @@ func CreateDemoProject() {
 
 	projectPath := runpath.PARENT.Join(projectName)
 	osmustexist.MustRoot(projectPath)
-	moduleInfo := rese.P1(utils.GetModuleInfo(projectPath))
+	moduleInfo := rese.P1(astkratos.GetModuleInfo(projectPath))
 	execConfig := osexec.NewExecConfig().
 		WithDebug().
 		WithEnvs([]string{"GOTOOLCHAIN=" + moduleInfo.GetToolchainVersion()}).
