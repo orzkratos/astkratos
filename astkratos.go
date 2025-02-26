@@ -7,6 +7,7 @@ import (
 
 	"github.com/orzkratos/astkratos/internal/utils"
 	"github.com/yyle88/must"
+	"github.com/yyle88/neatjson/neatjsons"
 	"github.com/yyle88/rese"
 	"github.com/yyle88/syntaxgo/syntaxgo_ast"
 	"github.com/yyle88/syntaxgo/syntaxgo_astnode"
@@ -80,7 +81,6 @@ func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinitio
 		zaplog.SUG.Debugln("xyz_grpc.pb.go path:", path)
 		// Get the package name from the file path
 		pkgName := syntaxgo_ast.GetPackageNameFromPath(path)
-		zaplog.SUG.Debugln("package-name:", pkgName)
 		// Read and trim lines from the file
 		sLines := rese.V1(utils.GetTrimmedLines(path))
 		for _, s := range sLines {
@@ -106,6 +106,8 @@ func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinitio
 		}
 		return nil
 	}))
+
+	zaplog.SUG.Debugln("list-grpc-unimplemented-servers definitions:", neatjsons.S(definitions))
 	return definitions
 }
 
@@ -125,6 +127,8 @@ func ListGrpcServices(root string) (definitions []*GrpcTypeDefinition) {
 		// Append the gRPC service definition to the list
 		definitions = append(definitions, one)
 	}
+
+	zaplog.SUG.Debugln("list-grpc-services definitions:", neatjsons.S(definitions))
 	return definitions
 }
 
@@ -162,5 +166,7 @@ func ListStructsMap(path string) map[string]*StructDefinition {
 			StructCode: structCode,
 		}
 	}
+
+	zaplog.SUG.Debugln("list-structs-map struct-map-size:", len(structMap))
 	return structMap
 }
