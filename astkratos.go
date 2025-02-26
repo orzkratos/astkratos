@@ -72,13 +72,15 @@ func ListGrpcServers(root string) (definitions []*GrpcTypeDefinition) {
 
 // ListGrpcUnimplementedServers lists all unimplemented gRPC server types in the specified root directory.
 func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinition) {
+	zaplog.SUG.Debugln("list-grpc-unimplemented-servers in path:", root)
+
 	definitions = make([]*GrpcTypeDefinition, 0)
 
 	must.Done(WalkFiles(root, NewSuffixMatcher([]string{"_grpc.pb.go"}), func(path string, info os.FileInfo) error {
-		zaplog.SUG.Debugln(path)
+		zaplog.SUG.Debugln("xyz_grpc.pb.go path:", path)
 		// Get the package name from the file path
 		pkgName := syntaxgo_ast.GetPackageNameFromPath(path)
-		zaplog.SUG.Debugln(pkgName)
+		zaplog.SUG.Debugln("package-name:", pkgName)
 		// Read and trim lines from the file
 		sLines := rese.V1(utils.GetTrimmedLines(path))
 		for _, s := range sLines {
@@ -109,12 +111,12 @@ func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinitio
 
 // ListGrpcServices lists all gRPC services in the specified root directory.
 func ListGrpcServices(root string) (definitions []*GrpcTypeDefinition) {
-	zaplog.SUG.Debugln(root)
+	zaplog.SUG.Debugln("list-grpc-services in path:", root)
 
 	definitions = make([]*GrpcTypeDefinition, 0)
 	// Iterate through unimplemented gRPC servers and extract service names
 	for _, x := range ListGrpcUnimplementedServers(root) {
-		zaplog.SUG.Debugln(x.Name, x.Package)
+		zaplog.SUG.Debugln("service-name:", x.Name, "package-name:", x.Package)
 		one := &GrpcTypeDefinition{
 			Name:    utils.GetSubstringBetween(x.Name, "Unimplemented", "Server"),
 			Package: x.Package,
@@ -136,6 +138,8 @@ type StructDefinition struct {
 
 // ListStructsMap lists all struct definitions in the specified file and returns them as a map.
 func ListStructsMap(path string) map[string]*StructDefinition {
+	zaplog.SUG.Debugln("list-structs-map in path:", path)
+
 	var structMap = map[string]*StructDefinition{}
 
 	// Read the entire source code of the file
@@ -146,11 +150,10 @@ func ListStructsMap(path string) map[string]*StructDefinition {
 
 	// Map struct types by their names
 	structTypes := syntaxgo_search.MapStructTypesByName(astFile)
-	zaplog.SUG.Debugln(len(structTypes))
 	for structName, structType := range structTypes {
 		// Get the code snippet defining the struct
 		structCode := syntaxgo_astnode.GetText(fileSource, structType)
-		zaplog.SUG.Debugln(structName, structCode)
+		zaplog.SUG.Debugln("struct-name:", structName, "struct-code:", structCode)
 		// Add the struct definition to the map
 		structMap[structName] = &StructDefinition{
 			Name:       structName,
