@@ -22,6 +22,8 @@ type GrpcTypeDefinition struct {
 
 // ListGrpcClients lists all gRPC client types in the specified root directory.
 func ListGrpcClients(root string) (definitions []*GrpcTypeDefinition) {
+	definitions = make([]*GrpcTypeDefinition, 0)
+
 	must.Done(WalkFiles(root, NewSuffixMatcher([]string{"_grpc.pb.go"}), func(path string, info os.FileInfo) error {
 		// Get the package name from the file path
 		pkgName := syntaxgo_ast.GetPackageNameFromPath(path)
@@ -45,6 +47,8 @@ func ListGrpcClients(root string) (definitions []*GrpcTypeDefinition) {
 
 // ListGrpcServers lists all gRPC server types in the specified root directory.
 func ListGrpcServers(root string) (definitions []*GrpcTypeDefinition) {
+	definitions = make([]*GrpcTypeDefinition, 0)
+
 	must.Done(WalkFiles(root, NewSuffixMatcher([]string{"_grpc.pb.go"}), func(path string, info os.FileInfo) error {
 		// Get the package name from the file path
 		pkgName := syntaxgo_ast.GetPackageNameFromPath(path)
@@ -68,6 +72,8 @@ func ListGrpcServers(root string) (definitions []*GrpcTypeDefinition) {
 
 // ListGrpcUnimplementedServers lists all unimplemented gRPC server types in the specified root directory.
 func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinition) {
+	definitions = make([]*GrpcTypeDefinition, 0)
+
 	must.Done(WalkFiles(root, NewSuffixMatcher([]string{"_grpc.pb.go"}), func(path string, info os.FileInfo) error {
 		zaplog.SUG.Debugln(path)
 		// Get the package name from the file path
@@ -104,6 +110,8 @@ func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinitio
 // ListGrpcServices lists all gRPC services in the specified root directory.
 func ListGrpcServices(root string) (definitions []*GrpcTypeDefinition) {
 	zaplog.SUG.Debugln(root)
+
+	definitions = make([]*GrpcTypeDefinition, 0)
 	// Iterate through unimplemented gRPC servers and extract service names
 	for _, x := range ListGrpcUnimplementedServers(root) {
 		zaplog.SUG.Debugln(x.Name, x.Package)

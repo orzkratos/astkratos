@@ -20,8 +20,8 @@ github.com/yyle88/eroticgo v0.0.3 h1:UMX4b1rFpu0GZQRhTmRLEbVuDBCle0BYt+kDGgxGc1s
 github.com/yyle88/eroticgo v0.0.3/go.mod h1:e748J+JnGHnPrHVExVb14VzmYjaJelyhnAzzi5JF/GQ=
 github.com/yyle88/formatgo v1.0.22 h1:ug5y3JigVwZ1kgTtyuNey7RRHrGlMIEJP4gkXJmgvtQ=
 github.com/yyle88/formatgo v1.0.22/go.mod h1:XXql3lly9YIODohSpFKs/Yy8phxATS/NujXMoBxKs9I=
-github.com/yyle88/must v0.0.15 h1:RUXjH8ILRkGEJM0gGJYS4zJlh66XBNbP2d/HCa8KWyE=
-github.com/yyle88/must v0.0.15/go.mod h1:eh05Aksb3JGi2tzb6OBgoY37icxT0OHmBQEM1dvMaVQ=
+github.com/yyle88/must v0.0.16 h1:0F6KDaMU5BCsH89U9mzLoVaeqXF7Zu3W0jeVj6C9LXI=
+github.com/yyle88/must v0.0.16/go.mod h1:eh05Aksb3JGi2tzb6OBgoY37icxT0OHmBQEM1dvMaVQ=
 github.com/yyle88/mutexmap v1.0.10 h1:PIsx9KTdK6h1yH5NzBrPl21RrZ/XsE4IbgulMlhJzZE=
 github.com/yyle88/mutexmap v1.0.10/go.mod h1:QUYDuARLPlGj414kHewQ5tt8jkDxQXoai8H3C4Gg+yc=
 github.com/yyle88/neatjson v0.0.11 h1:sk/FDtWFHZgtiL1ywO1HkF1z4quPLGthoVemOap2bWk=
@@ -38,8 +38,8 @@ github.com/yyle88/runpath v1.0.23 h1:VEdeaMXfvFY7CuF9Nceuxb6HSNDcmiSSGEf+zT7O900
 github.com/yyle88/runpath v1.0.23/go.mod h1:JRGxn/0Ytg6CvGoE2VrO74oX8Lu4jbOPZDKxr8tzPEg=
 github.com/yyle88/sure v0.0.36 h1:Lzgkk7FMzPvdlNxuEDOJ4uUp9B0xfGtLCFs36r4do/c=
 github.com/yyle88/sure v0.0.36/go.mod h1:krNSM3sRNIfT7eaD5KxhsmSg6g5b17YBfdGM/JMreUI=
-github.com/yyle88/syntaxgo v0.0.44 h1:3MlktVp6jLjQdC75yunf93BBD1ChEBXJ57Q9SsU7QPs=
-github.com/yyle88/syntaxgo v0.0.44/go.mod h1:P/wceuPWDCYMZCAGv8a/Zb+jUeAnGnvDlO5astXG9HY=
+github.com/yyle88/syntaxgo v0.0.45 h1:sLdtNRr1piakFpjkXZfcQ9rGKL0AqanB6j2vO1/XAM0=
+github.com/yyle88/syntaxgo v0.0.45/go.mod h1:VkQr83iVX/YMonnX0dLTVCMzS68rqscrAg2574obbl4=
 github.com/yyle88/tern v0.0.5 h1:a9HCJrP38VPowB3to54kOia1+Ab/ROoMJx0OXPUq3pY=
 github.com/yyle88/tern v0.0.5/go.mod h1:g9weyOMLtXYyt37EAshZPUTTHdH7WFauuxDi4oPr7/8=
 github.com/yyle88/zaplog v0.0.20 h1:ByVj51j2C9p5tWw8wbIdmdrMK5IS6VECh/U746t321E=

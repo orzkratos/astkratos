@@ -5,13 +5,13 @@ go 1.22.8
 require (
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/erero v1.0.18
-	github.com/yyle88/must v0.0.15
+	github.com/yyle88/must v0.0.16
 	github.com/yyle88/neatjson v0.0.11
 	github.com/yyle88/osexec v0.0.21
 	github.com/yyle88/osexistpath v0.0.16
 	github.com/yyle88/rese v0.0.3
 	github.com/yyle88/runpath v1.0.23
-	github.com/yyle88/syntaxgo v0.0.44
+	github.com/yyle88/syntaxgo v0.0.45
 	github.com/yyle88/tern v0.0.5
 	github.com/yyle88/zaplog v0.0.20
 )
