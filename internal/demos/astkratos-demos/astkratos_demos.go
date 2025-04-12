@@ -1,1 +1,0 @@
-package astkratos_demos
