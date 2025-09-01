@@ -102,6 +102,23 @@ err := astkratos.WalkFiles("./api", matcher, func(path string, info os.FileInfo)
 })
 ```
 
+### 一站式项目分析
+
+```go
+// 一次调用获取全面的项目分析
+analysis := astkratos.AnalyzeProject(".")
+fmt.Printf("项目: %s\n", analysis.ModuleInfo.Module.Path)
+fmt.Printf("Go 版本: %s\n", analysis.ModuleInfo.GetToolchainVersion())
+fmt.Printf("gRPC 客户端: %d\n", analysis.ClientCount)
+fmt.Printf("gRPC 服务器: %d\n", analysis.ServerCount)
+fmt.Printf("gRPC 服务: %d\n", analysis.ServiceCount)
+
+// 检查项目是否有 gRPC 组件
+if astkratos.HasGrpcClients("./api") {
+    fmt.Println("项目包含 gRPC 客户端")
+}
+```
+
 ## API 参考
 
 ### 核心类型
@@ -119,6 +136,13 @@ err := astkratos.WalkFiles("./api", matcher, func(path string, info os.FileInfo)
 - **`ListGrpcUnimplementedServers(root string)`**: 查找未实现的服务器结构
 - **`ListStructsMap(path string)`**: 解析和分析特定文件中的 Go 结构体
 - **`GetModuleInfo(projectPath string)`**: 提取全面的模块和依赖信息
+
+### 便利函数
+
+- **`HasGrpcClients(root string)`**: 检查是否存在任何 gRPC 客户端
+- **`HasGrpcServers(root string)`**: 检查是否存在任何 gRPC 服务器
+- **`CountGrpcServices(root string)`**: 获取 gRPC 服务的总数
+- **`AnalyzeProject(projectRoot string)`**: 包含聚合结果的全面项目分析
 
 ## 使用场景
 

@@ -12,8 +12,9 @@ package astkratos
 import (
 	"encoding/json"
 
-	"github.com/yyle88/erero"
+	"github.com/yyle88/must"
 	"github.com/yyle88/osexec"
+	"github.com/yyle88/rese"
 	"github.com/yyle88/tern/zerotern"
 )
 
@@ -67,20 +68,15 @@ func (a *ModuleInfo) GetToolchainVersion() string {
 // GetModuleInfo extracts comprehensive module information from the specified project
 // Executes go mod edit command to retrieve JSON-formatted module metadata
 // Parses and unmarshals module configuration including dependencies and toolchain info
-// Returns complete ModuleInfo structure or error if extraction fails
+// Returns complete ModuleInfo structure using assertion-style error handling
 //
 // GetModuleInfo 从指定项目提取全面的模块信息
 // 执行 go mod edit 命令检索 JSON 格式的模块元数据
 // 解析并反序列化包括依赖和工具链信息的模块配置
-// 返回完整的 ModuleInfo 结构或在提取失败时返回错误
+// 使用断言风格的错误处理返回完整的 ModuleInfo 结构
 func GetModuleInfo(projectPath string) (*ModuleInfo, error) {
-	output, err := osexec.ExecInPath(projectPath, "go", "mod", "edit", "-json")
-	if err != nil {
-		return nil, erero.Wro(err)
-	}
+	output := rese.V1(osexec.ExecInPath(projectPath, "go", "mod", "edit", "-json"))
 	var moduleInfo ModuleInfo
-	if err := json.Unmarshal(output, &moduleInfo); err != nil {
-		return nil, erero.Wro(err)
-	}
+	must.Done(json.Unmarshal(output, &moduleInfo))
 	return &moduleInfo, nil
 }

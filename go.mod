@@ -8,6 +8,7 @@ require (
 	github.com/yyle88/must v0.0.26
 	github.com/yyle88/neatjson v0.0.12
 	github.com/yyle88/osexec v0.0.32
+	github.com/yyle88/osexistpath v0.0.17
 	github.com/yyle88/rese v0.0.11
 	github.com/yyle88/runpath v1.0.23
 	github.com/yyle88/syntaxgo v0.0.53

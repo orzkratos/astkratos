@@ -13,5 +13,5 @@ func TestGetModuleInfo(t *testing.T) {
 	moduleInfo, err := astkratos.GetModuleInfo(runpath.PARENT.Path())
 	require.NoError(t, err)
 	t.Log(neatjsons.S(moduleInfo))
-	require.Equal(t, "go1.22.8", moduleInfo.GetToolchainVersion())
+	require.Equal(t, "go1.25.0", moduleInfo.GetToolchainVersion())
 }

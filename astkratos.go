@@ -12,11 +12,13 @@ package astkratos
 import (
 	"go/ast"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/orzkratos/astkratos/internal/utils"
 	"github.com/yyle88/must"
 	"github.com/yyle88/neatjson/neatjsons"
+	"github.com/yyle88/osexistpath/osmustexist"
 	"github.com/yyle88/rese"
 	"github.com/yyle88/syntaxgo/syntaxgo_ast"
 	"github.com/yyle88/syntaxgo/syntaxgo_astnode"
@@ -204,4 +206,84 @@ func ListStructsMap(path string) map[string]*StructDefinition {
 
 	zaplog.SUG.Debugln("list-structs-map struct-map-size:", len(structMap))
 	return structMap
+}
+
+// HasGrpcClients checks if any gRPC clients exist in the specified root directory
+// Returns true if at least one gRPC client is found, false otherwise
+//
+// HasGrpcClients 检查指定根目录下是否存在任何 gRPC 客户端
+// 如果找到至少一个 gRPC 客户端则返回 true，否则返回 false
+func HasGrpcClients(root string) bool {
+	clients := ListGrpcClients(root)
+	return len(clients) > 0
+}
+
+// HasGrpcServers checks if any gRPC servers exist in the specified root directory
+// Returns true if at least one gRPC server is found, false otherwise
+//
+// HasGrpcServers 检查指定根目录下是否存在任何 gRPC 服务器
+// 如果找到至少一个 gRPC 服务器则返回 true，否则返回 false
+func HasGrpcServers(root string) bool {
+	servers := ListGrpcServers(root)
+	return len(servers) > 0
+}
+
+// CountGrpcServices returns the total count of gRPC services in the specified root directory
+// Provides quick statistics without returning the full service list
+//
+// CountGrpcServices 返回指定根目录下 gRPC 服务的总数
+// 提供快速统计信息而无需返回完整的服务列表
+func CountGrpcServices(root string) int {
+	services := ListGrpcServices(root)
+	return len(services)
+}
+
+// ProjectAnalysis provides comprehensive analysis results for a Kratos project
+// Aggregates all analysis data including gRPC services, module info, and file counts
+//
+// ProjectAnalysis 为 Kratos 项目提供全面的分析结果
+// 聚合所有分析数据，包括 gRPC 服务、模块信息和文件统计
+type ProjectAnalysis struct {
+	ModuleInfo   *ModuleInfo           `json:"moduleInfo"`   // Module and dependency information // 模块和依赖信息
+	ClientCount  int                   `json:"clientCount"`  // Total gRPC client count // gRPC 客户端总数
+	ServerCount  int                   `json:"serverCount"`  // Total gRPC server count // gRPC 服务器总数
+	ServiceCount int                   `json:"serviceCount"` // Total gRPC service count // gRPC 服务总数
+	Clients      []*GrpcTypeDefinition `json:"clients"`      // List of gRPC clients // gRPC 客户端列表
+	Servers      []*GrpcTypeDefinition `json:"servers"`      // List of gRPC servers // gRPC 服务器列表
+	Services     []*GrpcTypeDefinition `json:"services"`     // List of gRPC services // gRPC 服务列表
+}
+
+// AnalyzeProject performs comprehensive analysis of a Kratos project
+// Scans for gRPC definitions and extracts complete module information in one operation
+// Returns aggregated project analysis with all discovered components and metadata
+//
+// AnalyzeProject 执行 Kratos 项目的全面分析
+// 扫描 gRPC 定义并在一次操作中提取完整的模块信息
+// 返回包含所有发现组件和元数据的聚合项目分析
+func AnalyzeProject(projectRoot string) *ProjectAnalysis {
+	// Get module information first
+	// 首先获取模块信息
+	moduleInfo := rese.P1(GetModuleInfo(projectRoot))
+
+	// Analyze gRPC components in API directory
+	// 分析 API 目录中的 gRPC 组件
+	apiPath := osmustexist.ROOT(filepath.Join(projectRoot, "api"))
+
+	clients := ListGrpcClients(apiPath)
+	servers := ListGrpcServers(apiPath)
+	services := ListGrpcServices(apiPath)
+
+	// Build comprehensive analysis
+	// 构建全面分析
+	analysis := &ProjectAnalysis{
+		ModuleInfo:   moduleInfo,
+		ClientCount:  len(clients),
+		ServerCount:  len(servers),
+		ServiceCount: len(services),
+		Clients:      clients,
+		Servers:      servers,
+		Services:     services,
+	}
+
+	return analysis
 }

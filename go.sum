@@ -28,6 +28,8 @@ github.com/yyle88/neatjson v0.0.12 h1:M6y4IsHbe2/3drF/kDl3zBpaN29lmfW4MetEQcoG04
 github.com/yyle88/neatjson v0.0.12/go.mod h1:LT3nIhKyB3lkD3INiIXCN3FejNu+g+qvzCJ+fZSZaRc=
 github.com/yyle88/osexec v0.0.32 h1:2+27JSN79e3SoQf8402lTJ6r0tkNc0zcYeYXVV61zK4=
 github.com/yyle88/osexec v0.0.32/go.mod h1:SFYaNeUMebG/VnfDWb1GaUBwhQISO/keioOrJV4AhB8=
+github.com/yyle88/osexistpath v0.0.17 h1:+F206hMCYMRcGweKoYNRRDgcWolZgKRYzGrDYd9O2n4=
+github.com/yyle88/osexistpath v0.0.17/go.mod h1:+t1m80g/LiZwCiQjalOVuNXVtejsvxqcImj63a/LYhw=
 github.com/yyle88/printgo v1.0.5 h1:gmaJKzEkrH6adbgfOfS6xq02CdvsE8QF+uKXXOdVLN8=
 github.com/yyle88/printgo v1.0.5/go.mod h1:QZZD92Orn8ddmxF5IOEFvLPPW66UIQtgoLixPdpXuQc=
 github.com/yyle88/rese v0.0.11 h1:GjTlfhlEXiy6GPfTChlyOY9lqEVq1yY1O4Wpp1ZI4Ew=

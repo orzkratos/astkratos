@@ -102,6 +102,23 @@ err := astkratos.WalkFiles("./api", matcher, func(path string, info os.FileInfo)
 })
 ```
 
+### One-Stop Project Analysis
+
+```go
+// Get comprehensive project analysis in one call
+analysis := astkratos.AnalyzeProject(".")
+fmt.Printf("Project: %s\n", analysis.ModuleInfo.Module.Path)
+fmt.Printf("Go Version: %s\n", analysis.ModuleInfo.GetToolchainVersion())
+fmt.Printf("gRPC Clients: %d\n", analysis.ClientCount)
+fmt.Printf("gRPC Servers: %d\n", analysis.ServerCount)
+fmt.Printf("gRPC Services: %d\n", analysis.ServiceCount)
+
+// Check if project has gRPC components
+if astkratos.HasGrpcClients("./api") {
+    fmt.Println("Project has gRPC clients")
+}
+```
+
 ## API Reference
 
 ### Core Types
@@ -119,6 +136,13 @@ err := astkratos.WalkFiles("./api", matcher, func(path string, info os.FileInfo)
 - **`ListGrpcUnimplementedServers(root string)`**: Find unimplemented server structures
 - **`ListStructsMap(path string)`**: Parse and analyze Go structs in specific files
 - **`GetModuleInfo(projectPath string)`**: Extract comprehensive module and dependency information
+
+### Convenience Functions
+
+- **`HasGrpcClients(root string)`**: Check if any gRPC clients exist
+- **`HasGrpcServers(root string)`**: Check if any gRPC servers exist  
+- **`CountGrpcServices(root string)`**: Get total count of gRPC services
+- **`AnalyzeProject(projectRoot string)`**: Comprehensive project analysis with aggregated results
 
 ## Use Cases
 
