@@ -119,6 +119,19 @@ if astkratos.HasGrpcClients("./api") {
 }
 ```
 
+### Debug Mode
+
+```go
+// Enable debug output to see detailed analysis process
+astkratos.SetDebugMode(true)
+
+// Run analysis with debug output
+analysis := astkratos.AnalyzeProject(".")
+
+// Disable debug output for clean results
+astkratos.SetDebugMode(false)
+```
+
 ## API Reference
 
 ### Core Types
@@ -143,6 +156,10 @@ if astkratos.HasGrpcClients("./api") {
 - **`HasGrpcServers(root string)`**: Check if any gRPC servers exist  
 - **`CountGrpcServices(root string)`**: Get total count of gRPC services
 - **`AnalyzeProject(projectRoot string)`**: Comprehensive project analysis with aggregated results
+
+### Debug Functions
+
+- **`SetDebugMode(enable bool)`**: Enable or disable debug output for development and troubleshooting
 
 ## Use Cases
 

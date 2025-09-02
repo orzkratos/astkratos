@@ -119,6 +119,19 @@ if astkratos.HasGrpcClients("./api") {
 }
 ```
 
+### 调试模式
+
+```go
+// 启用调试输出以查看详细分析过程
+astkratos.SetDebugMode(true)
+
+// 运行带调试输出的分析
+analysis := astkratos.AnalyzeProject(".")
+
+// 禁用调试输出获得清爽的结果
+astkratos.SetDebugMode(false)
+```
+
 ## API 参考
 
 ### 核心类型
@@ -143,6 +156,10 @@ if astkratos.HasGrpcClients("./api") {
 - **`HasGrpcServers(root string)`**: 检查是否存在任何 gRPC 服务器
 - **`CountGrpcServices(root string)`**: 获取 gRPC 服务的总数
 - **`AnalyzeProject(projectRoot string)`**: 包含聚合结果的全面项目分析
+
+### 调试函数
+
+- **`SetDebugMode(enable bool)`**: 启用或禁用调试输出，用于开发和故障排查
 
 ## 使用场景
 

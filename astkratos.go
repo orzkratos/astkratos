@@ -96,12 +96,16 @@ func ListGrpcServers(root string) (definitions []*GrpcTypeDefinition) {
 // ListGrpcUnimplementedServers lists all unimplemented gRPC server types in the specified root directory
 // ListGrpcUnimplementedServers 列出指定根目录下的所有未实现的 gRPC 服务器类型
 func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinition) {
-	zaplog.SUG.Debugln("list-grpc-unimplemented-servers in path:", root)
+	if debugModeOpen {
+		zaplog.SUG.Debugln("discovering unimplemented gRPC servers in project:", root)
+	}
 
 	definitions = make([]*GrpcTypeDefinition, 0)
 
 	must.Done(WalkFiles(root, NewSuffixMatcher([]string{"_grpc.pb.go"}), func(path string, info os.FileInfo) error {
-		zaplog.SUG.Debugln("xyz_grpc.pb.go path:", path)
+		if debugModeOpen {
+			zaplog.SUG.Debugln("examining generated protobuf source:", path)
+		}
 		// Get the package name from the file path
 		// 从文件路径获取包名
 		pkgName := syntaxgo_ast.GetPackageNameFromPath(path)
@@ -134,20 +138,26 @@ func ListGrpcUnimplementedServers(root string) (definitions []*GrpcTypeDefinitio
 		return nil
 	}))
 
-	zaplog.SUG.Debugln("list-grpc-unimplemented-servers definitions:", neatjsons.S(definitions))
+	if debugModeOpen {
+		zaplog.SUG.Debugln("discovered unimplemented server definitions:", neatjsons.S(definitions))
+	}
 	return definitions
 }
 
 // ListGrpcServices lists all gRPC services in the specified root directory
 // ListGrpcServices 列出指定根目录下的所有 gRPC 服务
 func ListGrpcServices(root string) (definitions []*GrpcTypeDefinition) {
-	zaplog.SUG.Debugln("list-grpc-services in path:", root)
+	if debugModeOpen {
+		zaplog.SUG.Debugln("resolving service definitions in project:", root)
+	}
 
 	definitions = make([]*GrpcTypeDefinition, 0)
 	// Iterate through unimplemented gRPC servers and extract service names
 	// 遍历未实现的 gRPC 服务器并提取服务名称
 	for _, x := range ListGrpcUnimplementedServers(root) {
-		zaplog.SUG.Debugln("service-name:", x.Name, "package-name:", x.Package)
+		if debugModeOpen {
+			zaplog.SUG.Debugln("identified service:", x.Name, "within package:", x.Package)
+		}
 		one := &GrpcTypeDefinition{
 			Name:    utils.GetSubstringBetween(x.Name, "Unimplemented", "Server"),
 			Package: x.Package,
@@ -158,7 +168,9 @@ func ListGrpcServices(root string) (definitions []*GrpcTypeDefinition) {
 		definitions = append(definitions, one)
 	}
 
-	zaplog.SUG.Debugln("list-grpc-services definitions:", neatjsons.S(definitions))
+	if debugModeOpen {
+		zaplog.SUG.Debugln("resolved service definitions:", neatjsons.S(definitions))
+	}
 	return definitions
 }
 
@@ -174,7 +186,9 @@ type StructDefinition struct {
 // ListStructsMap lists all struct definitions in the specified file and returns them as a map
 // ListStructsMap 列出指定文件中的所有结构体定义并返回映射表
 func ListStructsMap(path string) map[string]*StructDefinition {
-	zaplog.SUG.Debugln("list-structs-map in path:", path)
+	if debugModeOpen {
+		zaplog.SUG.Debugln("parsing Go struct definitions from:", path)
+	}
 
 	var structMap = map[string]*StructDefinition{}
 
@@ -193,7 +207,9 @@ func ListStructsMap(path string) map[string]*StructDefinition {
 		// Get the code snippet defining the struct
 		// 获取定义结构体的代码片段
 		structCode := syntaxgo_astnode.GetText(fileSource, structType)
-		zaplog.SUG.Debugln("struct-name:", structName, "struct-code:", structCode)
+		if debugModeOpen {
+			zaplog.SUG.Debugln("extracted struct:", structName, "with source:", structCode)
+		}
 		// Add the struct definition to the map
 		// 将结构体定义添加到映射表中
 		structMap[structName] = &StructDefinition{
@@ -204,7 +220,9 @@ func ListStructsMap(path string) map[string]*StructDefinition {
 		}
 	}
 
-	zaplog.SUG.Debugln("list-structs-map struct-map-size:", len(structMap))
+	if debugModeOpen {
+		zaplog.SUG.Debugln("struct parsing completed, discovered", len(structMap), "definitions")
+	}
 	return structMap
 }
 
