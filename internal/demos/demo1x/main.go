@@ -8,7 +8,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -18,6 +17,7 @@ import (
 	"github.com/yyle88/osexec"
 	"github.com/yyle88/osexistpath/osmustexist"
 	"github.com/yyle88/rese"
+	"github.com/yyle88/zaplog"
 )
 
 func main() {
@@ -33,11 +33,11 @@ func main() {
 	// Generate new Kratos project using kratos CLI tool
 	// 使用 kratos CLI 工具生成新的 Kratos 项目
 	output := rese.A1(osexec.NewExecConfig().WithPath(tempDIR).Exec("kratos", "new", "demo1kratos"))
-	fmt.Println(string(output))
+	zaplog.SUG.Debugln(string(output))
 
 	// Analyze the generated project structure and gRPC definitions
 	// 分析生成的项目结构和 gRPC 定义
 	projectRoot := osmustexist.ROOT(filepath.Join(tempDIR, "demo1kratos"))
-	result := astkratos.AnalyzeProject(projectRoot)
-	fmt.Println(neatjsons.S(result))
+	report := astkratos.AnalyzeProject(projectRoot)
+	zaplog.SUG.Debugln(neatjsons.S(report))
 }

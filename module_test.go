@@ -9,6 +9,9 @@ import (
 	"github.com/yyle88/runpath"
 )
 
+// TestGetModuleInfo tests module information extraction from go.mod
+//
+// TestGetModuleInfo 测试从 go.mod 提取模块信息
 func TestGetModuleInfo(t *testing.T) {
 	moduleInfo, err := astkratos.GetModuleInfo(runpath.PARENT.Path())
 	require.NoError(t, err)
